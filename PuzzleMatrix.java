@@ -96,23 +96,36 @@ public class PuzzleMatrix {
 
     public int kurangI(int i){ //hanya dapat menerima parameter 1-16
         int p, q, row, col, value;
+        boolean found = false;
         value = 0;
         row = 0;
         col = 0;
 
-        for(p = 0; p < rowSize; p++){
-            for(q = 0; q < colSize; q++){
+        p = 0;
+        while(p < rowSize && !found){
+            q = 0;
+            while(q < colSize && !found){
                 if(matrices[p][q] == i){
                     row = p;
                     col = q;
-                    break;
+                    found = true;
                 }
+                else q++;
             }
+            if (!found) p++;
         }
         for(p = row; p < rowSize; p++){
-            for(q = col; q < colSize; q++){
-                if(matrices[p][q] < i){
-                    value++;
+            if (p == row){
+                for(q = col; q < colSize; q++){
+                    if(matrices[p][q] < i){
+                        value++;
+                    }
+                }
+            } else {
+                for(q = 0; q < colSize; q++){
+                    if(matrices[p][q] < i){
+                        value++;
+                    }
                 }
             }
         }
@@ -151,7 +164,7 @@ public class PuzzleMatrix {
             System.out.println("KURANG[" + i + "] = " + val);
             sumKurangI += val;
         }
-        if(empty_idx[0]+empty_idx[1] % 2 == 0){
+        if((empty_idx[0]+empty_idx[1]) % 2 != 0){
             sumKurangI += 1;
         }
         System.out.println();

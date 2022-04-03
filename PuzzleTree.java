@@ -36,7 +36,7 @@ public class PuzzleTree {
             up.up(empty_idx);
             up.setDepth(newDepth);
             up.setCost();
-            puzzleTree.add(up);
+            puzzleTree.add(0,up);
             prevRoot.put(up, m);
             simplices++;
         }
@@ -52,7 +52,7 @@ public class PuzzleTree {
             down.down(empty_idx);
             down.setDepth(newDepth);
             down.setCost();
-            puzzleTree.add(down);
+            puzzleTree.add(0,down);
             prevRoot.put(down, m);
             simplices++;
         }
@@ -68,7 +68,7 @@ public class PuzzleTree {
             left.left(empty_idx);
             left.setDepth(newDepth);
             left.setCost();
-            puzzleTree.add(left);
+            puzzleTree.add(0,left);
             prevRoot.put(left, m);
             simplices++;
         }
@@ -84,7 +84,7 @@ public class PuzzleTree {
             right.right(empty_idx);
             right.setDepth(newDepth);
             right.setCost();
-            puzzleTree.add(right);
+            puzzleTree.add(0,right);
             prevRoot.put(right, m);
             simplices++;
         }
@@ -99,7 +99,6 @@ public class PuzzleTree {
         generateLeft(m);
         //generateRight
         generateRight(m);
-        puzzleTree.remove(m);
     }
 
     public void PuzzleSolving(){
