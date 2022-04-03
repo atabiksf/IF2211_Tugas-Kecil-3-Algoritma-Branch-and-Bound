@@ -3,11 +3,50 @@ import java.util.Scanner;
 
 public class PuzzleMatrix {
     private int[][] matrices;
+    private int depth;
+    private int cost;
+
     private static int rowSize = 4;
     private static int colSize = 4;
 
     public PuzzleMatrix(){
         matrices = new int[rowSize][colSize];
+        depth = 0;
+        cost = 0;
+    }
+
+    public PuzzleMatrix(PuzzleMatrix m){
+        this.matrices = new int[rowSize][colSize];
+        for(int i = 0; i < rowSize; i++){
+            for(int j = 0; j <colSize; j++){
+                this.matrices[i][j] = m.matrices[i][j];
+            }
+        }
+        this.depth = m.depth;
+        this.cost = m.cost;
+    }
+
+    public void setCost(){
+        for(int i = 0; i < rowSize; i++){
+            for(int j = 0; j < colSize; j++){
+                if(matrices[i][j] != (i*colSize + j + 1)){
+                    cost++;
+                }
+            }
+        }
+        cost += depth;
+    }
+
+    public int getCost(){
+        return cost;
+    }
+
+    public void setDepth(int newDepth){
+        depth = newDepth;
+    }
+
+    public int getDepth(){
+        return depth;
     }
 
     public void readFile(){
@@ -116,5 +155,40 @@ public class PuzzleMatrix {
         return true;
     }
 
+    public void up(int[] empty_idx){
+        int src_row = empty_idx[0] + 1;
+        int src_col = empty_idx[1];
+
+        int temp = matrices[src_row][src_col];
+        matrices[src_row][src_col] = 16;
+        matrices[empty_idx[0]][empty_idx[1]] = temp;        
+    }
+
+    public void down(int[] empty_idx){
+        int src_row = empty_idx[0] - 1;
+        int src_col = empty_idx[1];
+
+        int temp = matrices[src_row][src_col];
+        matrices[src_row][src_col] = 16;
+        matrices[empty_idx[0]][empty_idx[1]] = temp; 
+    }
+
+    public void left(int[] empty_idx){
+        int src_row = empty_idx[0];
+        int src_col = empty_idx[1] + 1;
+
+        int temp = matrices[src_row][src_col];
+        matrices[src_row][src_col] = 16;
+        matrices[empty_idx[0]][empty_idx[1]] = temp; 
+    }
+
+    public void right(int[] empty_idx){
+        int src_row = empty_idx[0];
+        int src_col = empty_idx[1] - 1;
+
+        int temp = matrices[src_row][src_col];
+        matrices[src_row][src_col] = 16;
+        matrices[empty_idx[0]][empty_idx[1]] = temp; 
+    }
 
 }
