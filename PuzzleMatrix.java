@@ -5,6 +5,7 @@ public class PuzzleMatrix {
     private int[][] matrices;
     private int depth;
     private int cost;
+    public boolean readFile;
 
     private static int rowSize = 4;
     private static int colSize = 4;
@@ -12,7 +13,7 @@ public class PuzzleMatrix {
     public PuzzleMatrix(){
         matrices = new int[rowSize][colSize];
         depth = 0;
-        cost = 0;
+        setCost();
     }
 
     public PuzzleMatrix(PuzzleMatrix m){
@@ -68,8 +69,11 @@ public class PuzzleMatrix {
                     matrices[i][j] = elmt;
                 }
             }
+            fileScanner.close();
+            readFile = true;
         } catch(Exception e){
             System.out.println(e.getMessage());
+            readFile = false;
         }     
     }
 
