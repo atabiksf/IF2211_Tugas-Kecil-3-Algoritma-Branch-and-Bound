@@ -2,20 +2,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PuzzleTree {
-    public ArrayList<PuzzleMatrix> puzzleTree;
-    public HashMap<PuzzleMatrix,PuzzleMatrix> prevRoot;
-    public ArrayList<PuzzleMatrix> solutionList;
+    public ArrayList<PuzzleMatrix> puzzleTree = new ArrayList<PuzzleMatrix>();
+    public HashMap<PuzzleMatrix,PuzzleMatrix> prevRoot = new HashMap<PuzzleMatrix,PuzzleMatrix>();
+    public ArrayList<PuzzleMatrix> solutionList = new ArrayList<PuzzleMatrix>();
     public int simplices;
 
     public PuzzleTree(){
-        puzzleTree = new ArrayList<PuzzleMatrix>();
-        prevRoot = new HashMap<PuzzleMatrix,PuzzleMatrix>();
-        solutionList = new ArrayList<PuzzleMatrix>();
         simplices = 0;
     }
 
     public PuzzleMatrix leastCost(){
-        PuzzleMatrix out = puzzleTree.get(0);
+        PuzzleMatrix out = new PuzzleMatrix(puzzleTree.get(0));
         int min = out.getCost();
         for(PuzzleMatrix mat : puzzleTree){
             if(mat.getCost() < min){
@@ -27,12 +24,11 @@ public class PuzzleTree {
     }
 
     public void generateUp(PuzzleMatrix m){
-        PuzzleMatrix up;
         int[] empty_idx = m.findEmptySlot();
         int newDepth = m.getDepth()+1;
         //generateUp
         if(empty_idx[0] != 3){
-            up = new PuzzleMatrix(m);
+            PuzzleMatrix up = new PuzzleMatrix(m);
             up.up(empty_idx);
             up.setDepth(newDepth);
             up.setCost();
@@ -43,12 +39,11 @@ public class PuzzleTree {
     }
 
     public void generateDown(PuzzleMatrix m){
-        PuzzleMatrix down;
         int[] empty_idx = m.findEmptySlot();
         int newDepth = m.getDepth()+1;
-        //generateUp
+        //generateDown
         if(empty_idx[0] != 0){
-            down = new PuzzleMatrix(m);
+            PuzzleMatrix down = new PuzzleMatrix(m);
             down.down(empty_idx);
             down.setDepth(newDepth);
             down.setCost();
@@ -59,12 +54,11 @@ public class PuzzleTree {
     }
 
     public void generateLeft(PuzzleMatrix m){
-        PuzzleMatrix left;
         int[] empty_idx = m.findEmptySlot();
         int newDepth = m.getDepth()+1;
-        //generateUp
+        //generateLeft
         if(empty_idx[1] != 3){
-            left = new PuzzleMatrix(m);
+            PuzzleMatrix left = new PuzzleMatrix(m);
             left.left(empty_idx);
             left.setDepth(newDepth);
             left.setCost();
@@ -75,12 +69,11 @@ public class PuzzleTree {
     }
 
     public void generateRight(PuzzleMatrix m){
-        PuzzleMatrix right;
         int[] empty_idx = m.findEmptySlot();
         int newDepth = m.getDepth()+1;
-        //generateUp
+        //generateRight
         if(empty_idx[1] != 0){
-            right = new PuzzleMatrix(m);
+            PuzzleMatrix right = new PuzzleMatrix(m);
             right.right(empty_idx);
             right.setDepth(newDepth);
             right.setCost();
@@ -99,11 +92,11 @@ public class PuzzleTree {
         generateLeft(m);
         //generateRight
         generateRight(m);
+        puzzleTree.remove(m);
     }
 
     public void PuzzleSolving(){
-        PuzzleMatrix mat; 
-        mat = leastCost();
+        PuzzleMatrix mat = new PuzzleMatrix(leastCost());
         while(mat.getCost() - mat.getDepth() != 0){
             generateChilds(mat);
             mat = leastCost();
