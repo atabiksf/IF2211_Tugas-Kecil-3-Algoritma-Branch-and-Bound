@@ -27,6 +27,7 @@ public class PuzzleMatrix {
     }
 
     public void setCost(){
+        cost = 0;
         for(int i = 0; i < rowSize; i++){
             for(int j = 0; j < colSize; j++){
                 if(matrices[i][j] != (i*colSize + j + 1)){
@@ -73,16 +74,24 @@ public class PuzzleMatrix {
     }
 
     public void printMatrix(){
+        int elmt, i, j;
         for(i = 0; i < rowSize; i++){
             for(j = 0; j < colSize; j++){
                 elmt = matrices[i][j];
                 if(j == colSize - 1){
-                    System.out.println(elmt + " ");
+                    if(elmt == 16){
+                        System.out.println("E");
+                    }
+                    else System.out.println(elmt);
                 } else{
-                    System.out.print(elmt);
+                    if (elmt == 16){
+                        System.out.print("E ");
+                    }
+                    else System.out.print(elmt + " ");
                 }
             }
         }
+        System.out.println();
     }
 
     public int kurangI(int i){ //hanya dapat menerima parameter 1-16
@@ -126,7 +135,7 @@ public class PuzzleMatrix {
                     j++;
                 }
             }
-            i++;
+            if (!found) i++;
         }
 
         return idx;
